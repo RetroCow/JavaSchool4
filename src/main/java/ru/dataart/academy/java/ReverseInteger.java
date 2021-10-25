@@ -11,15 +11,11 @@ public class ReverseInteger {
      * If result (number in reversed order) is out of int range [-2,147,483,648,  2,147,483,647] throw custom
      * unchecked exception. In main method (Main class) if exception happened output message with problem to user.
      */
-    public int reverse(int inputNumber) throws Exception {
-
-        if(inputNumber <= -2147483648) {
-            throw new Exception("Exceeded limit");
-        }
+    public int reverse(int inputNumber){
 
         boolean isNeg = inputNumber < 0;
 
-        String strNumber = Integer.toString(Math.abs(inputNumber));
+        String strNumber = Long.toString(Math.abs((long)inputNumber));
         int strLength = strNumber.length();
         char[] numberArr = new char[strLength];
 
@@ -27,12 +23,16 @@ public class ReverseInteger {
             numberArr[i - 1] = strNumber.charAt(strLength - i);
         }
 
-        int result = Integer.parseInt(String.valueOf(numberArr));
+        long result = Long.parseLong(String.valueOf(numberArr));
 
         if (isNeg) {
             result *= -1;
         }
 
-        return result;
+        if (result <= Integer.MIN_VALUE || result > Integer.MAX_VALUE) {
+            throw new RuntimeException("Exceeded limit");
+        }
+
+        return (int)result;
     }
 }
